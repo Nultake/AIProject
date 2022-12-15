@@ -41,13 +41,14 @@ public abstract class CostBasedAlgorithm extends Algorithm {
     private State[] pop() {
         int minValue = Integer.MAX_VALUE;
 
-        for (Integer cost : fringe.values()) {
+        for (Integer cost : this.fringe.values()) {
             if (cost < minValue)
                 minValue = cost;
         }
+
         State[] targetStatePath = null;
 
-        for (State[] statePath : fringe.keySet()) {
+        for (State[] statePath : this.fringe.keySet()) {
             if (fringe.get(statePath) == minValue) {
                 targetStatePath = statePath;
                 break;
@@ -60,6 +61,26 @@ public abstract class CostBasedAlgorithm extends Algorithm {
     }
 
     private void push(State[] nodePath) {
+        if (this.fringe.size() == this.MEMORY_LIMIT) {
+            int maxValue = Integer.MIN_VALUE;
+
+            for (int cost : this.fringe.values()) {
+                if (cost > maxValue)
+                    maxValue = cost;
+            }
+
+            State[] targetStatePath = null;
+
+            for (State[] statePath : this.fringe.keySet()) {
+                if (fringe.get(statePath) == maxValue) {
+                    targetStatePath = statePath;
+                    break;
+                }
+            }
+
+            fringe.remove(targetStatePath);
+        }
+
         fringe.put(nodePath, calculatePathCost(nodePath));
     }
 

@@ -5,6 +5,7 @@ package Game;
  */
 public class State {
     private TileType[][] tiles;
+    private int cost;
 
     public boolean isEqual(State state) {
 
@@ -41,6 +42,14 @@ public class State {
         state.tiles = this.tiles;
 
         return state;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
+    public int getCost() {
+        return this.cost;
     }
 
 }

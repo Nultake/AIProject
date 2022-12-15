@@ -6,8 +6,11 @@ public class UniformCostAlgorithm extends CostBasedAlgorithm {
 
     @Override
     protected int calculatePathCost(State[] nodePath) {
-        // TODO Auto-generated method stub
-        return 0;
+        int cost = 0;
+        for (State state : nodePath)
+            cost += state.getCost();
+
+        return cost;
     }
 
 }
