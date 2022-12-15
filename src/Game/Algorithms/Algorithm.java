@@ -24,7 +24,8 @@ public abstract class Algorithm {
 
     protected State[] getPossibleNextStates(State state) {
         if (stepLimitCounter == 10)
-            return null; // TODO : FINISH GAME OR RETURN ERROR MESSAGE TO USER;
+            return null; // TODO : The expansion will go on till 10th expanded node. The program will
+                         // print out each expanded state and compare it with the given goal state
 
         TileType[][] tiles = state.getTiles();
 
