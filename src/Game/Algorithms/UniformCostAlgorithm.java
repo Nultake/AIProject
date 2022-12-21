@@ -11,6 +11,7 @@ public class UniformCostAlgorithm extends CostBasedAlgorithm {
             cost += state.getCost();
 
         return cost;
+
     }
 
 }

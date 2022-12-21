@@ -1,7 +1,9 @@
 package Game.Algorithms;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import Game.State;
@@ -9,6 +11,8 @@ import Game.State;
 public abstract class CostBasedAlgorithm extends Algorithm {
 
     protected HashMap<State[], Integer> fringe = new HashMap<>();
+
+    protected ArrayList<State> expansionOrder = new ArrayList<>();
 
     protected abstract int calculatePathCost(State[] nodePath);
 
@@ -25,16 +29,22 @@ public abstract class CostBasedAlgorithm extends Algorithm {
             State[] possibleNextStates = getPossibleNextStates(lastState);
 
             for (State state : possibleNextStates) {
-                List<State> states = Arrays.asList(statePath);
+                List<State> states = new LinkedList<State>(Arrays.asList(statePath));
 
                 states.add(state);
 
-                push((State[]) states.toArray());
+                State[] pushState = new State[states.size()];
+
+                for (int i = 0; i < states.size(); i++) {
+                    pushState[i] = states.get(i);
+                }
+
+                push(pushState);
             }
+
         } while (!lastState.isEqual(goalState));
 
-        // TODO:Finish game
-
+        // Finish game
         return statePath;
     }
 
@@ -55,8 +65,9 @@ public abstract class CostBasedAlgorithm extends Algorithm {
             }
         }
 
-        fringe.remove(targetStatePath);
+        expansionOrder.add(targetStatePath[targetStatePath.length - 1]);
 
+        fringe.remove(targetStatePath);
         return targetStatePath;
     }
 

@@ -6,6 +6,7 @@ package Game;
 public class State {
     private TileType[][] tiles;
     private int cost;
+    private TileType lastMovedTile;
 
     public boolean isEqual(State state) {
 
@@ -39,7 +40,15 @@ public class State {
 
     public State clone() {
         State state = new State();
-        state.tiles = this.tiles;
+        TileType[][] newTiles = new TileType[3][3];
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                newTiles[i][j] = this.tiles[i][j];
+            }
+        }
+
+        state.setTiles(newTiles);
 
         return state;
     }
@@ -50,6 +59,28 @@ public class State {
 
     public int getCost() {
         return this.cost;
+    }
+
+    public void setTiles(TileType[][] tiles) {
+        this.tiles = tiles;
+    }
+
+    public void print() {
+        System.out.println("**************************");
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(" " + getTiles()[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public void setLastMovedTile(TileType lastMovedTile) {
+        this.lastMovedTile = lastMovedTile;
+    }
+
+    public TileType getLastMovedTile() {
+        return this.lastMovedTile;
     }
 
 }
