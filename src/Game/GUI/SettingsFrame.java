@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.border.EmptyBorder;
 
 import Game.State;
@@ -198,9 +199,7 @@ public class SettingsFrame extends JFrame {
 
                     State[] solutionPath = algorithm.findSolutionPath();
 
-                    for (State solutionState : solutionPath) {
-                        solutionState.print();
-                    }
+                    new GameBoardFrame(algorithm, solutionPath);
 
                 } else
                     JOptionPane.showMessageDialog(null, "There is tile that is not fit",

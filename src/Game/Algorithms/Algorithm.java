@@ -9,7 +9,7 @@ import Game.TileType;
 public abstract class Algorithm {
 
     protected final int MEMORY_LIMIT = 25;
-    protected final int STEP_LIMIT = 10;
+    protected final int STEP_LIMIT = 1000;
 
     protected State initalState;
     protected State goalState;
@@ -22,7 +22,6 @@ public abstract class Algorithm {
 
     protected State[] getPossibleNextStates(State state) {
         if (stepLimitCounter == STEP_LIMIT) {
-            System.out.println("step limiter exceed");
             return null;
         }
         // TODO : The expansion will go on till 10th expanded node. The program will
@@ -53,7 +52,7 @@ public abstract class Algorithm {
             newState.setCost(this.decideCost(currentType, MoveDirection.VERTICAL));
 
             newState.getTiles()[currentTypeCoordinate[0]][currentTypeCoordinate[1]] = TileType.EMPTY;
-            newState.getTiles()[currentTypeCoordinate[0]][currentTypeCoordinate[1] - 1] = currentType;
+            newState.getTiles()[currentTypeCoordinate[0] - 1][currentTypeCoordinate[1]] = currentType;
             newState.setLastMovedTile(currentType);
 
             possibleStates.add(newState);
@@ -64,7 +63,7 @@ public abstract class Algorithm {
             newState.setCost(this.decideCost(currentType, MoveDirection.VERTICAL));
 
             newState.getTiles()[currentTypeCoordinate[0]][currentTypeCoordinate[1]] = TileType.EMPTY;
-            newState.getTiles()[currentTypeCoordinate[0]][currentTypeCoordinate[1] + 1] = currentType;
+            newState.getTiles()[currentTypeCoordinate[0] + 1][currentTypeCoordinate[1]] = currentType;
             newState.setLastMovedTile(currentType);
 
             possibleStates.add(newState);
@@ -75,7 +74,7 @@ public abstract class Algorithm {
             newState.setCost(this.decideCost(currentType, MoveDirection.HORIZANTAL));
 
             newState.getTiles()[currentTypeCoordinate[0]][currentTypeCoordinate[1]] = TileType.EMPTY;
-            newState.getTiles()[currentTypeCoordinate[0] + 1][currentTypeCoordinate[1]] = currentType;
+            newState.getTiles()[currentTypeCoordinate[0]][currentTypeCoordinate[1] + 1] = currentType;
             newState.setLastMovedTile(currentType);
 
             possibleStates.add(newState);
@@ -86,7 +85,7 @@ public abstract class Algorithm {
             newState.setCost(this.decideCost(currentType, MoveDirection.HORIZANTAL));
 
             newState.getTiles()[currentTypeCoordinate[0]][currentTypeCoordinate[1]] = TileType.EMPTY;
-            newState.getTiles()[currentTypeCoordinate[0] - 1][currentTypeCoordinate[1]] = currentType;
+            newState.getTiles()[currentTypeCoordinate[0]][currentTypeCoordinate[1] - 1] = currentType;
             newState.setLastMovedTile(currentType);
 
             possibleStates.add(newState);
@@ -102,22 +101,22 @@ public abstract class Algorithm {
     }
 
     private boolean checkUpMove(State state, int[] coordinate) {
-        if ((coordinate[1] - 1) == -1)
+        if ((coordinate[0] - 1) == -1)
             return false;
 
-        int[] upCoordinate = new int[] { coordinate[0], coordinate[1] - 1 };
+        int[] upCoordinate = new int[] { coordinate[0] - 1, coordinate[1] };
 
-        if (coordinate[1] > 0 && state.findTileTypeByCoordinate(upCoordinate) == TileType.EMPTY)
+        if (coordinate[0] > 0 && state.findTileTypeByCoordinate(upCoordinate) == TileType.EMPTY)
             return true;
 
         return false;
     }
 
     private boolean checkDownMove(State state, int[] coordinate) {
-        if ((coordinate[1] + 1) == 3)
+        if ((coordinate[0] + 1) == 3)
             return false;
 
-        int[] downCoordinate = new int[] { coordinate[0], coordinate[1] + 1 };
+        int[] downCoordinate = new int[] { coordinate[0] + 1, coordinate[1] };
 
         if (coordinate[1] < 2 && state.findTileTypeByCoordinate(downCoordinate) == TileType.EMPTY)
             return true;
@@ -126,10 +125,10 @@ public abstract class Algorithm {
     }
 
     private boolean checkRightMove(State state, int[] coordinate) {
-        if ((coordinate[0] + 1) == 3)
+        if ((coordinate[1] + 1) == 3)
             return false;
 
-        int[] rightCoordinate = new int[] { coordinate[0] + 1, coordinate[1] };
+        int[] rightCoordinate = new int[] { coordinate[0], coordinate[1] + 1 };
 
         if (coordinate[0] > 0 && state.findTileTypeByCoordinate(rightCoordinate) == TileType.EMPTY)
             return true;
@@ -138,10 +137,10 @@ public abstract class Algorithm {
     }
 
     private boolean checkLeftMove(State state, int[] coordinate) {
-        if ((coordinate[0] - 1) == -1)
+        if ((coordinate[1] - 1) == -1)
             return false;
 
-        int[] leftCoordinate = new int[] { coordinate[0] - 1, coordinate[1] };
+        int[] leftCoordinate = new int[] { coordinate[0], coordinate[1] - 1 };
 
         if (coordinate[0] < 2 && state.findTileTypeByCoordinate(leftCoordinate) == TileType.EMPTY)
             return true;

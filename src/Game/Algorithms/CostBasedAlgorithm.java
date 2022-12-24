@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import Game.State;
 
 public abstract class CostBasedAlgorithm extends Algorithm {
@@ -27,6 +29,18 @@ public abstract class CostBasedAlgorithm extends Algorithm {
             lastState = statePath[statePath.length - 1];
 
             State[] possibleNextStates = getPossibleNextStates(lastState);
+
+            if (possibleNextStates == null) {
+                State[] expOrder = new State[expansionOrder.size()];
+                int i = 0;
+                for (State state : expansionOrder) {
+                    expOrder[i] = state;
+                    i++;
+                }
+                JOptionPane.showMessageDialog(null, "Limit Exceed",
+                        "Limit Exceed!", JOptionPane.ERROR_MESSAGE);
+                return expOrder;
+            }
 
             for (State state : possibleNextStates) {
                 List<State> states = new LinkedList<State>(Arrays.asList(statePath));
