@@ -12,7 +12,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.border.EmptyBorder;
 
 import Game.State;
@@ -22,7 +21,7 @@ import Game.Algorithms.Algorithm;
 import Game.Algorithms.UniformCostAlgorithm;
 
 public class SettingsFrame extends JFrame {
-    private JComboBox comboBox;
+    private JComboBox<String> comboBox;
 
     public SettingsFrame() {
         ArrayList<ColorButton> initialButtons = new ArrayList<>();
@@ -159,8 +158,9 @@ public class SettingsFrame extends JFrame {
         lblNewLabel_2.setBounds(468, 269, 71, 14);
         contentPane.add(lblNewLabel_2);
 
-        comboBox = new JComboBox();
-        comboBox.setModel(new DefaultComboBoxModel(new String[] { "A* Algorithm", "Uniformed Cost Algorithm" }));
+        comboBox = new JComboBox<String>();
+        comboBox.setModel(
+                new DefaultComboBoxModel<String>(new String[] { "A* Algorithm", "Uniformed Cost Algorithm" }));
         comboBox.setBounds(548, 265, 142, 22);
         contentPane.add(comboBox);
 

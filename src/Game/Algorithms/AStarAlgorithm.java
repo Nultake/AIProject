@@ -6,12 +6,14 @@ import Game.TileType;
 public class AStarAlgorithm extends CostBasedAlgorithm {
 
     @Override
-    protected int calculatePathCost(State[] nodePath) {
+    public int calculatePathCost(State[] nodePath) {
         int cost = 0;
+
         for (State state : nodePath) {
             cost += state.getCost();
-            cost += this.heuristicCalculation(state, this.goalState);
         }
+        cost += this.heuristicCalculation(nodePath[nodePath.length - 1], this.goalState);
+
         return cost;
     }
 
@@ -26,11 +28,11 @@ public class AStarAlgorithm extends CostBasedAlgorithm {
         int[] goalStateGreenCoordinate = goalState.findTileCoordinate(TileType.GREEN);
         int[] goalStateBlueCoordinate = goalState.findTileCoordinate(TileType.BLUE);
 
-        if (checkIfCoordinatesEqual(currentStateRedCoordinate, goalStateRedCoordinate))
+        if (!checkIfCoordinatesEqual(currentStateRedCoordinate, goalStateRedCoordinate))
             cost++;
-        if (checkIfCoordinatesEqual(currentStateGreenCoordinate, goalStateGreenCoordinate))
+        if (!checkIfCoordinatesEqual(currentStateGreenCoordinate, goalStateGreenCoordinate))
             cost++;
-        if (checkIfCoordinatesEqual(currentStateBlueCoordinate, goalStateBlueCoordinate))
+        if (!checkIfCoordinatesEqual(currentStateBlueCoordinate, goalStateBlueCoordinate))
             cost++;
 
         return cost;

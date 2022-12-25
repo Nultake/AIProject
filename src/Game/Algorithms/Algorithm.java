@@ -9,7 +9,7 @@ import Game.TileType;
 public abstract class Algorithm {
 
     protected final int MEMORY_LIMIT = 25;
-    protected final int STEP_LIMIT = 1000;
+    protected final int STEP_LIMIT = 10;
 
     protected State initalState;
     protected State goalState;
@@ -24,10 +24,6 @@ public abstract class Algorithm {
         if (stepLimitCounter == STEP_LIMIT) {
             return null;
         }
-        // TODO : The expansion will go on till 10th expanded node. The program will
-        // print out each expanded state and compare it with the given goal state
-
-        TileType[][] tiles = state.getTiles();
 
         TileType currentType = order[findCursor(state)];
 
@@ -118,7 +114,7 @@ public abstract class Algorithm {
 
         int[] downCoordinate = new int[] { coordinate[0] + 1, coordinate[1] };
 
-        if (coordinate[1] < 2 && state.findTileTypeByCoordinate(downCoordinate) == TileType.EMPTY)
+        if (coordinate[0] < 2 && state.findTileTypeByCoordinate(downCoordinate) == TileType.EMPTY)
             return true;
 
         return false;
@@ -130,7 +126,7 @@ public abstract class Algorithm {
 
         int[] rightCoordinate = new int[] { coordinate[0], coordinate[1] + 1 };
 
-        if (coordinate[0] > 0 && state.findTileTypeByCoordinate(rightCoordinate) == TileType.EMPTY)
+        if (coordinate[1] < 2 && state.findTileTypeByCoordinate(rightCoordinate) == TileType.EMPTY)
             return true;
 
         return false;
@@ -142,7 +138,7 @@ public abstract class Algorithm {
 
         int[] leftCoordinate = new int[] { coordinate[0], coordinate[1] - 1 };
 
-        if (coordinate[0] < 2 && state.findTileTypeByCoordinate(leftCoordinate) == TileType.EMPTY)
+        if (coordinate[1] > 0 && state.findTileTypeByCoordinate(leftCoordinate) == TileType.EMPTY)
             return true;
 
         return false;
@@ -153,9 +149,11 @@ public abstract class Algorithm {
             case RED:
                 return 1;
             case GREEN:
-                return direction == MoveDirection.VERTICAL ? 1 : 2;
+                return direction == MoveDirection.HORIZANTAL ? 1 : 2;
             case BLUE:
-                return direction == MoveDirection.VERTICAL ? 2 : 1;
+                return direction == MoveDirection.HORIZANTAL ? 2 : 1;
+            default:
+                break;
         }
 
         return 0;

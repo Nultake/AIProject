@@ -16,7 +16,7 @@ public abstract class CostBasedAlgorithm extends Algorithm {
 
     protected ArrayList<State> expansionOrder = new ArrayList<>();
 
-    protected abstract int calculatePathCost(State[] nodePath);
+    public abstract int calculatePathCost(State[] nodePath);
 
     public State[] findSolutionPath() {
         State lastState = null;

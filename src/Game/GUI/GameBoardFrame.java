@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import Game.State;
 import Game.TileType;
 import Game.Algorithms.Algorithm;
+import Game.Algorithms.CostBasedAlgorithm;
 import Game.Algorithms.UniformCostAlgorithm;
 
 public class GameBoardFrame extends JFrame {
@@ -21,6 +22,8 @@ public class GameBoardFrame extends JFrame {
 
         setTitle(algorithm instanceof UniformCostAlgorithm ? "Result : Uniform Cost Algorithm"
                 : "Result : A* Algorithm");
+
+        setTitle(getTitle() + " Cost : " + ((CostBasedAlgorithm) algorithm).calculatePathCost(solutionPath));
 
         int x = 0;
         int y = 0;
