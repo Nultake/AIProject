@@ -87,6 +87,15 @@ public abstract class Algorithm {
             possibleStates.add(newState);
         }
 
+        if (possibleStates.size() == 0) {
+            State newState = state.clone();
+
+            newState.setCost(0);
+
+            newState.setLastMovedTile(currentType);
+
+            possibleStates.add(newState);
+        }
         State[] returnArray = new State[possibleStates.size()];
 
         for (int i = 0; i < returnArray.length; i++) {
