@@ -96,6 +96,7 @@ public abstract class Algorithm {
 
             possibleStates.add(newState);
         }
+
         State[] returnArray = new State[possibleStates.size()];
 
         for (int i = 0; i < returnArray.length; i++) {
